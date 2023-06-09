@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
-function useFetch(url) {
+export default function Joke() {
   const [data, setData] = useState();
+  const [id, setId] = useState(0);
+  const url = `https://example-apis.vercel.app/api/bad-jokes/${id}`;
 
   useEffect(() => {
     async function startFetching() {
@@ -13,14 +15,6 @@ function useFetch(url) {
 
     startFetching();
   }, [url]);
-
-  return data;
-}
-
-export default function Joke() {
-  const [id, setId] = useState(0);
-
-  const data = useFetch(`https://example-apis.vercel.app/api/bad-jokes/${id}`);
 
   function handlePrevJoke() {
     setId(data.prevId);
