@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useSWR from "swr";
 
 export default function Joke() {
-  const [data, setData] = useState();
   const [id, setId] = useState(0);
-  const url = `https://example-apis.vercel.app/api/bad-jokes/${id}`;
 
-  useEffect(() => {
-    async function startFetching() {
-      const response = await fetch(url);
-      const newData = await response.json();
-
-      setData(newData);
-    }
-
-    startFetching();
-  }, [url]);
+  const { data } = useSWR(
+    `https://example-apis.vercel.app/api/bad-jokes/${id}`
+  );
 
   function handlePrevJoke() {
     setId(data.prevId);
@@ -27,6 +19,8 @@ export default function Joke() {
   if (!data) {
     return <h1>Loading...</h1>;
   }
+  console.log(data);
+  console.log(id);
 
   return (
     <>
